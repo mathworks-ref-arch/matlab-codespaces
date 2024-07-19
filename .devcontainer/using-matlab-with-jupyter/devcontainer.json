@@ -1,0 +1,24 @@
+{
+    "name": "Using MATLAB With Jupyter",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "hostRequirements": {
+        "cpus": 4
+    },
+    "features": {
+        "ghcr.io/mathworks/devcontainer-features/matlab": {
+            "release": "r2024a",
+            "products": "MATLAB Symbolic_Math_Toolbox",
+            "installJupyterMatlabProxy": true,
+            "installMatlabEngineForPython": true
+        },
+        "ghcr.io/devcontainers/features/python": {
+            "version": "os-provided",
+            "installJupyterlab": true,
+            "configureJupyterlabAllowOrigin": "*"
+        }
+    },
+    "containerEnv": {
+        "MATLAB_USERWORKDIR": "${containerWorkspaceFolder}",
+        "MATLAB_USE_USERWORK": "1"
+    }
+}

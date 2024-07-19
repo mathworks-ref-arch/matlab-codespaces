@@ -1,0 +1,18 @@
+{
+  "name": "Using devcontainer feature",
+  // For more information about devcontainer feature, See: https://containers.dev/implementors/features/
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "hostRequirements": {
+    "cpus": 4
+  },
+  "features": {
+    "ghcr.io/mathworks/devcontainer-features/matlab": {
+      // For options available, See: https://github.com/mathworks/devcontainer-features/tree/main/src/matlab
+      "release": "r2024a",
+      "products": "MATLAB Symbolic_Math_Toolbox",
+      "installMatlabProxy": "true",
+      "startInDesktop": "true"
+    }
+  },
+  "containerUser": "vscode"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "MATLAB",
+  // See https://hub.docker.com/r/mathworks/matlab/tags for available images.
+  "image": "mathworks/matlab:latest",
+  "hostRequirements": {
+    "cpus": 4
+  },
+  "portsAttributes": {
+    "8888": {
+      "label": "MATLAB",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "waitFor": "updateContentCommand",
+  "onCreateCommand": {
+    // Installing GIT to support codespaces & devcontainer workflows
+    "install-dependencies": "sudo apt-get update && sudo apt-get install --no-install-recommends -y git python3 python3-pip xvfb"
+  },
+  "updateContentCommand": "sudo python3 -m pip install --upgrade matlab-proxy",
+  "postStartCommand": "env MWI_APP_PORT=8888 MWI_ENABLE_TOKEN_AUTH=False run.sh -browser"
+  // For releases older than R2022a use the following instead:
+  // "postStartCommand": "env MWI_APP_PORT=8888 MWI_ENABLE_TOKEN_AUTH=False matlab-proxy-app"
+}
