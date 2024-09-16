@@ -4,7 +4,7 @@
         // See: https://github.com/mathworks-ref-arch/matlab-dockerfile
         "dockerfile": "Dockerfile",
         "args": {
-            "MATLAB_RELEASE": "r2024a",
+            "MATLAB_RELEASE": "r2024b",
             "MATLAB_PRODUCT_LIST": "MATLAB Symbolic_Math_Toolbox"
         }
     },
