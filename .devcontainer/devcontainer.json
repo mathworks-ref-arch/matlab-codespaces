@@ -1,46 +1,46 @@
 {
-  /* This DevContainer configuration file demonstrates
-      1. Using the mathworks/matlab image on Dockerhub 
-      2. Installation of MATLAB Integration for Jupyter & JupyterLab  
-      3. Configuration of VSCode environment for following modes of access:
-          a. MATLAB in a Browser
-          b. Directly from VSCode, using the MATLAB extension for VSCode
-          c. Using Jupyter Notebooks in VSCode
-          d. Start Codespace in Jupyter
-  See: https://hub.docker.com/r/mathworks/matlab for available images.
-  */
-  "name": "Built using MathWorks Docker Hub Image",
-  "image": "mathworks/matlab:latest",
-  "onCreateCommand": {
-    "install-dependencies": "sudo apt-get update && sudo apt-get install --no-install-recommends -y git"
-  },
-  "updateContentCommand": {
-    // dockerhub containers from R2023a onwards use PIPX to install matlab-proxy
-    // For older releases use the "using-matlab-dockerfile" configuration
-    "install-mifj-and-jupyterlab": "pipx upgrade matlab-proxy && pipx inject --include-apps --include-deps matlab-proxy jupyter-matlab-proxy jupyterlab"
-  },
-  "waitFor": "updateContentCommand",
-  "postStartCommand": {
-    "start-matlab-desktop": "run.sh -browser"
-  },
-  "portsAttributes": {
-    "8888": {
-      "label": "MATLAB",
-      "onAutoForward": "openPreview"
+  "name": "MATLAB Codespace R2025a",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/mathworks/devcontainer-features/matlab:0": {
+      "release": "r2025a",
+      "products": [
+        "MATLAB",
+        "Computer_Vision_Toolbox",
+        "Curve_Fitting_Toolbox",
+        "Deep_Learning_Toolbox",
+        "Fuzzy_Logic_Toolbox",
+        "Image_Acquisition_Toolbox",
+        "Image_Processing_Toolbox",
+        "Parallel_Computing_Toolbox"
+      ],
+      "installMatlabProxy": "true",
+      "startInDesktop": "false",
+      "installJupyterMatlabProxy": true,
+      "installJupyterLab": true,
+      "installMatlabEngineForPython": true
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "os-provided"
     }
+  },
+  "containerUser": "vscode",
+  "hostRequirements": {
+    "cpus": 4
   },
   "containerEnv": {
     "MWI_APP_PORT": "8888",
     "MWI_ENABLE_TOKEN_AUTH": "False",
-    // Configure MATLAB's startup folder
     "MATLAB_USERWORKDIR": "${containerWorkspaceFolder}",
     "MATLAB_USE_USERWORK": "1",
-    // Enable embedding the desktop into VSCode's Simple Browser
-    "MWI_CUSTOM_HTTP_HEADERS": "{\"Content-Security-Policy\": \"frame-ancestors *\"}",
-    "MW_DDUX_FORCE_ENABLE": "true",
-    "MW_CONTEXT_TAGS": "MATLAB:CODESPACES:V1"
+    "MWI_CUSTOM_HTTP_HEADERS": "{\"Content-Security-Policy\": \"frame-ancestors *\"}"
   },
-  // Configure VSCode Extensions
+  "portsAttributes": {
+    "8888": {
+      "label": "MATLAB Web Interface",
+      "onAutoForward": "openPreview"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -50,16 +50,12 @@
       ],
       "settings": {
         "MATLAB.signIn": true,
-        // Adds MATLAB's PIPX environments to Python indexer
-        "python.venvPath": "/home/matlab/.local/share/pipx/venvs/",
-        // Marks MATLAB Kernel as a trusted source
         "jupyter.kernels.trusted": [
-          "/home/matlab/.local/share/pipx/venvs/matlab-proxy/share/jupyter/kernels/jupyter_matlab_kernel/kernel.json"
+          "/usr/share/jupyter/kernels/jupyter_matlab_kernel/kernel.json"
         ]
       }
     }
   },
-  "hostRequirements": {
-    "cpus": 4
-  }
+  "postCreateCommand": "/bin/bash -lc 'set -euo pipefail; echo \"[DEBUG] Updating apt and installing core deps\"; sudo apt-get update -y && sudo apt-get install --no-install-recommends -y git curl >/dev/null; echo \"[DEBUG] postCreate finished\"'",
+  "postStartCommand": "/bin/bash -lc 'set -euo pipefail; echo \"[DEBUG] checking MATLAB proxy port ${MWI_APP_PORT}\"; ss -ltn | grep \":${MWI_APP_PORT}\" || echo \"[DEBUG] MATLAB proxy not listening yet\"'"
 }
