@@ -10,7 +10,7 @@
   See: https://hub.docker.com/r/mathworks/matlab for available images.
   */
   "name": "Built using MathWorks Docker Hub Image",
-  "image": "mathworks/matlab:latest",
+  "image": "docker.io/mathworks/matlab:latest",
   "onCreateCommand": {
     "install-dependencies": "sudo apt-get update && sudo apt-get install --no-install-recommends -y git"
   },
