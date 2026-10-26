@@ -14,7 +14,7 @@
   "features": {
     "ghcr.io/mathworks/devcontainer-features/matlab": {
       // For more options, See: https://github.com/mathworks/devcontainer-features/tree/main/src/matlab
-      "release": "r2026a",
+      "release": "r2026b",
       "products": "MATLAB Symbolic_Math_Toolbox Simulink",
       "installMatlabProxy": "true",
       "startInDesktop": "true",

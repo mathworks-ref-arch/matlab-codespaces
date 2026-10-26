@@ -13,7 +13,7 @@
     "build": {
         "dockerfile": "Dockerfile",
         "args": {
-            "MATLAB_RELEASE": "r2026a",
+            "MATLAB_RELEASE": "r2026b",
             "MATLAB_PRODUCT_LIST": "MATLAB Symbolic_Math_Toolbox Simulink"
         }
     },
